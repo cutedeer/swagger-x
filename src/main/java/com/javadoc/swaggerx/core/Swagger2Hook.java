@@ -89,21 +89,10 @@ public class Swagger2Hook {
         //read from local
         // 检查是否有源码
         checkSrc();
-        // 从缓存文件
-        readDocInfoFromJson();
         if (hasSrc) {
             docInfo = new DocInfo();
             // 得到所方法的注释
             scanAllUrl();
-            // 删除历史文件
-            try {
-                srcFile = new File(System.getProperty("user.dir"),"src");
-                if (srcFile.exists() && srcFile.isDirectory()) {
-                    File parent = new File(srcFile, "main/resources/swagger");
-                    deleteDir(parent);
-                }
-            } catch (Exception ignored) {
-            }
         }
         logger.info("hookSwaggerDoc apiDoc:{}", JacksonUtil.toSerialize(docInfo));
         Map<String, Documentation> map = documentationCache.all();
@@ -111,9 +100,9 @@ public class Swagger2Hook {
         for (Documentation doc : map.values()) {
             hookSwaggerDoc(doc);
         }
-        if (hasSrc) {
-            saveDocInfo();
-        }
+        // 删除源代码
+        File parent = new File(projectDir);
+        deleteDir(parent);
     }
 
     public static void main(String[] args) {
@@ -140,34 +129,6 @@ public class Swagger2Hook {
             }
         }
     }
-
-
-    private void readDocInfoFromJson() {
-        try {
-            docInfo = new ObjectMapper().readValue(new ClassPathResource(docFilePath).getInputStream(), DocInfo.class);
-            logger.info("readDocInfoFromJson...");
-        } catch (IOException e) {
-            logger.error("failed readDocInfoFromJson...", e);
-        }
-    }
-
-
-    private void saveDocInfo() {
-        try {
-            String docInfoJson = new ObjectMapper().writeValueAsString(docInfo);
-            File parent = new File(srcFile, "main/resources/swagger");
-            boolean mkdirs = parent.mkdirs();
-            if (mkdirs) {
-                File file = new File(srcFile, "main/resources/" + docFilePath);
-                FileWriter fw = new FileWriter(file);
-                fw.write(docInfoJson);
-                fw.close();
-            }
-        } catch (IOException e) {
-            logger.error("saveDocInfo", e);
-        }
-    }
-
 
     /**
      * 获取所有url
