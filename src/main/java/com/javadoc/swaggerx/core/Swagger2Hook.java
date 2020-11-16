@@ -86,12 +86,13 @@ public class Swagger2Hook {
             docInfo = new DocInfo();
             // 得到所方法的注释
             scanAllUrl();
-        }
-        logger.info("hookSwaggerDoc apiDoc:{}", JacksonUtil.toSerialize(docInfo));
-        Map<String, Documentation> map = documentationCache.all();
-        logger.info("all Documentation:{},hasSrc:{}", JacksonUtil.toSerialize(map), hasSrc);
-        for (Documentation doc : map.values()) {
-            hookSwaggerDoc(doc);
+            // 替换逻辑
+            logger.info("hookSwaggerDoc apiDoc:{}", JacksonUtil.toSerialize(docInfo));
+            Map<String, Documentation> map = documentationCache.all();
+            logger.info("all Documentation:{},hasSrc:{}", JacksonUtil.toSerialize(map), hasSrc);
+            for (Documentation doc : map.values()) {
+                hookSwaggerDoc(doc);
+            }
         }
         // 删除源代码
         File parent = new File(projectDir);
