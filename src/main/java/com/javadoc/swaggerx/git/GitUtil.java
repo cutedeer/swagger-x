@@ -61,20 +61,4 @@ public class GitUtil {
         }
         return "";
     }
-
-
-    public static void main(String[] args) throws GitAPIException {
-        //设置远程服务器上的用户名和密码
-        UsernamePasswordCredentialsProvider usernamePasswordCredentialsProvider =new
-                UsernamePasswordCredentialsProvider("shuzhuang.su","ssj980910!");
-
-        //克隆代码库命令
-        CloneCommand cloneCommand = Git.cloneRepository();
-
-        Git git= cloneCommand.setURI("http://gitlab.corp.11bee.com/backend/honeycomb_supervise.git") //设置远程URI
-                .setBranch("master") //设置clone下来的分支
-                .setDirectory(new File("/Users/shuzhusngsu/honeycomb_supervise")) //设置下载存放路径
-                .setCredentialsProvider(usernamePasswordCredentialsProvider) //设置权限验证
-                .call();
-    }
 }
