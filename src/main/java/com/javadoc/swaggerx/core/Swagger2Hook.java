@@ -27,8 +27,6 @@ import springfox.documentation.spring.web.DocumentationCache;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.function.Function;
