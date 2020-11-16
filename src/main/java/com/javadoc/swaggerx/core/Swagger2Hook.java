@@ -13,6 +13,7 @@ import com.sun.javadoc.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.method.HandlerMethod;
@@ -57,7 +58,7 @@ public class Swagger2Hook {
     private final String docFilePath = "swagger/doc-info.json";
 
 
-    public Swagger2Hook(DocumentationCache documentationCache, WebApplicationContext applicationContext) {
+    public Swagger2Hook(DocumentationCache documentationCache, WebApplicationContext applicationContext, Environment environment) {
         this.documentationCache = documentationCache;
         this.applicationContext = applicationContext;
         new Thread(() -> {
