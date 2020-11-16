@@ -97,8 +97,11 @@ public class Swagger2Hook {
             scanAllUrl();
             // 删除历史文件
             try {
-                File parent = new File(srcFile, "main/resources/swagger");
-                deleteDir(parent);
+                srcFile = new File(System.getProperty("user.dir"),"src");
+                if (srcFile.exists() && srcFile.isDirectory()) {
+                    File parent = new File(srcFile, "main/resources/swagger");
+                    deleteDir(parent);
+                }
             } catch (Exception ignored) {
             }
         }
@@ -254,7 +257,6 @@ public class Swagger2Hook {
     private File getSourceFile(String parent, String cls) {
         File src = new File(parent, "src");
         if (src.exists() && src.isDirectory()) {
-            srcFile = src;
             String javaPath = "main/java/" + getClassPath(cls);
             File sourceFile = new File(src, javaPath + ".kt");
             if (sourceFile.exists()) {
