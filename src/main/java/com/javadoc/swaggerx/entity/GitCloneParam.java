@@ -1,6 +1,5 @@
 package com.javadoc.swaggerx.entity;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 
 /**
@@ -14,7 +13,7 @@ public class GitCloneParam {
     /**
      * 远程库路径
      */
-    public final String remotePath;
+    private final String remotePath;
     /**
      * 用户名
      */
@@ -31,14 +30,14 @@ public class GitCloneParam {
     /**
      * 下载已有仓库到本地路径
      */
-    public final String localPath;
+    private final String localPath;
 
     public GitCloneParam(Environment environment) {
         this.remotePath = environment.getProperty("swaggerx.project.git.address");
         this.gitUser = environment.getProperty("swaggerx.project.git.userName");
         this.gitPassword = environment.getProperty("swaggerx.project.git.password");
         this.projectBranch = environment.getProperty("swaggerx.project.git.branch");
-        this.localPath = environment.getProperty("swaggerx.project.git.branch");
+        this.localPath = environment.getProperty("swaggerx.project.beta.path");
     }
 
     public String getRemotePath() {

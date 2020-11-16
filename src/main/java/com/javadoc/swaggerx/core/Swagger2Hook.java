@@ -7,6 +7,7 @@ import com.javadoc.swaggerx.common.util.JacksonUtil;
 import com.javadoc.swaggerx.common.util.JavaDocReaderUtil;
 import com.javadoc.swaggerx.entity.ApiDoc;
 import com.javadoc.swaggerx.entity.DocInfo;
+import com.javadoc.swaggerx.entity.GitCloneParam;
 import com.javadoc.swaggerx.entity.ModelDoc;
 import com.javadoc.swaggerx.git.GitUtil;
 import com.sun.javadoc.*;
@@ -45,6 +46,7 @@ public class Swagger2Hook {
 
     private final DocumentationCache documentationCache;
     private final WebApplicationContext applicationContext;
+    private final Environment environment;
 
 
     private DocInfo docInfo;
@@ -61,6 +63,7 @@ public class Swagger2Hook {
     public Swagger2Hook(DocumentationCache documentationCache, WebApplicationContext applicationContext, Environment environment) {
         this.documentationCache = documentationCache;
         this.applicationContext = applicationContext;
+        this.environment = environment;
         new Thread(() -> {
             logger.info("=======init easy swagger======");
             try {
@@ -115,7 +118,7 @@ public class Swagger2Hook {
     }
 
     private void checkSrc() {
-        projectDir = GitUtil.cloneProject();
+        projectDir = GitUtil.cloneProject(new GitCloneParam(environment));
         File parent = new File(projectDir);
         logger.info("parent :{}", JacksonUtil.toSerialize(parent));
         //遍历二级目录（多模块）

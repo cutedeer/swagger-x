@@ -1,5 +1,6 @@
 package com.javadoc.swaggerx.git;
 
+import com.javadoc.swaggerx.entity.GitCloneParam;
 import org.eclipse.jgit.api.CloneCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -16,47 +17,28 @@ import java.io.File;
  */
 public class GitUtil {
 
-    /**
-     * 远程库路径
-     */
-    @Value("${swaggerx.project.git.address}")
-    public static String remotePath ;
-
-    @Value("${swaggerx.project.git.userName}")
-    private static String gitUser;
-    @Value("${swaggerx.project.git.password}")
-    private static String gitPassword;
-    @Value("${swaggerx.project.git.branch}")
-    private static String projectBranch;
-
-    /**
-     * //下载已有仓库到本地路径
-     */
-    @Value("${swaggerx.project.beta.path}")
-    public static String localPath;
-
 
     /**
      * 克隆远程库
      */
-    public static String cloneProject(){
+    public static String cloneProject(GitCloneParam param){
         //设置远程服务器上的用户名和密码
         UsernamePasswordCredentialsProvider usernamePasswordCredentialsProvider =new
-                UsernamePasswordCredentialsProvider(gitUser,gitPassword);
+                UsernamePasswordCredentialsProvider(param.getGitUser(),param.getGitPassword());
         //克隆代码库命令
         CloneCommand cloneCommand = Git.cloneRepository();
         try {
             Git git= cloneCommand
                     //设置远程URI
-                    .setURI(remotePath)
+                    .setURI(param.getRemotePath())
                     //设置clone下来的分支
-                    .setBranch(projectBranch)
+                    .setBranch(param.getProjectBranch())
                     //设置下载存放路径
-                    .setDirectory(new File(localPath))
+                    .setDirectory(new File(param.getLocalPath()))
                     //设置权限验证
                     .setCredentialsProvider(usernamePasswordCredentialsProvider)
                     .call();
-            return localPath;
+            return param.getLocalPath();
         } catch (GitAPIException ignored) {
         }
         return "";
