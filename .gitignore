@@ -19,7 +19,9 @@ target/
 *.iml
 *.ipr
 /out
-/.DS_Store
+# system ignore
+.DS_Store
+Thumbs.db
 
 ### NetBeans ###
 /nbproject/private/
