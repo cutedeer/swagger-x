@@ -1,6 +1,5 @@
 package com.javadoc.swaggerx.core;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.javadoc.swaggerx.common.util.JacksonUtil;
@@ -15,7 +14,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
@@ -55,9 +53,6 @@ public class Swagger2Hook {
      * 是否有源码
      */
     private boolean hasSrc;
-    private File srcFile;
-
-    private final String docFilePath = "swagger/doc-info.json";
 
 
     public Swagger2Hook(DocumentationCache documentationCache, WebApplicationContext applicationContext, Environment environment) {
